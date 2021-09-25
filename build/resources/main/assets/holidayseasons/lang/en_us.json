@@ -1,3 +1,5 @@
 {
-  "block.holidayseasons.hsb01_block_starter_registry_name": "HSB01 Block Starter"
+  "item.holidayseasons.hsb01_block_starter_item": "Block Starter Item",
+  "block.holidayseasons.hsb01_block_starter": "Block Starter",
+  "itemGroup.holidaySeasonsTab": "Holiday Seasons"
 }
