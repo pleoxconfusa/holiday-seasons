@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: holidayseasons
+Specification-Vendor: pleoxmods
+Specification-Version: 1
+Implementation-Title: holiday-seasons
+Implementation-Version: 1.0
+Implementation-Vendor: pleoxmods
+Implementation-Timestamp: 2021-09-24T21:26:57-0400
+
