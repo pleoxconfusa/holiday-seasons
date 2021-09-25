@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component>
+  <configuration default="false" factoryName="Application" name="runClientfewerconsolemessages" singleton="false" type="Application">
+    <option name="MAIN_CLASS_NAME" value=""/>
+    <option name="VM_PARAMETERS" value="-Dforge.logging.console.level=warn -Dforge.logging.markers=SCAN,REGISTRIES,REGISTRYDUMP"/>
+    <option name="PROGRAM_PARAMETERS" value=""/>
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$\run"/>
+    <module name="holiday-seasons.main"/>
+    <envs>
+      <env name="MOD_CLASSES" value="holidayseasons%%$PROJECT_DIR$\build\resources\main;holidayseasons%%$PROJECT_DIR$\build\classes\java\main"/>
+    </envs>
+    <method v="2">
+      <option enabled="true" name="Make"/>
+      <option enabled="true" externalProjectPath="$PROJECT_DIR$" name="Gradle.BeforeRunTask" tasks=":prepareRunClientfewerconsolemessages"/>
+    </method>
+  </configuration>
+</component>
