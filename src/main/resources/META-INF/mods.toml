@@ -7,7 +7,7 @@ loaderVersion="[31,)"
 # Review your options at https://choosealicense.com/. All rights reserved is the default copyright stance, and is thus the default here.
 license="MIT"
 # A URL to refer people to when problems occur with this mod
-issueTrackerURL="https://github.com/pleoxconfusa/holiday-seasons/issues"
+issueTrackerURL="https://github.com/pleoxconfusa/holiday-seasons"
 # If the mods defined in this file should show as separate resource packs
 showAsResourcePack=false
 
@@ -15,8 +15,7 @@ showAsResourcePack=false
   modId="holidayseasons"
   version="1.0.0.0"
   displayName="Holiday Seasons"
-  updateJSONURL="minecraftforge.net/versions.json"
-  displayURL="minecraftforge.net"
+  displayURL="https://github.com/pleoxconfusa/holiday-seasons"
 #   TODO
   logoFile=""
   credits=""
