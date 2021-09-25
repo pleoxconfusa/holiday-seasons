@@ -1,11 +1,15 @@
 buildscript {
     repositories {
-        maven { url = 'https://files.minecraftforge.net/maven' }
         mavenCentral()
-        maven { // Registrate
-            url "http://maven.tterrag.com/"
-        }
         mavenLocal()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '4.1.+', changing: true
@@ -28,7 +32,37 @@ version = "MC${minecraft_version}-${mod_version}.${buildnumber}"
 group = 'com.org.pleoxmods' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'holidayseasons'
 
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Mojang ships Java 8 to end users, so your mod should target Java 8.
+
+allprojects {
+
+    apply plugin: 'maven-publish'
+
+    repositories {
+        maven { // CTM
+            url "http://maven.tterrag.com/"
+        }
+        maven { // JEI
+            url "http://dvs1.progwml6.com/files/maven"
+        }
+        maven { // Hwyla
+            url "http://maven.tehnut.info/"
+        }
+    }
+
+    configurations {
+        shade
+    }
+
+    publishing {
+        repositories {
+            if (project.hasProperty('mavendir')) {
+                maven { url mavendir }
+            }
+        }
+    }
+}
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
