@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "holidayseasons:item/hsb01_block_starter_item"
+  }
+}
