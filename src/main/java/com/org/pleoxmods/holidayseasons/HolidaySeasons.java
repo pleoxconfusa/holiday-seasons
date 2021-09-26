@@ -1,15 +1,13 @@
 package com.org.pleoxmods.holidayseasons;
 import com.org.pleoxmods.holidayseasons.block.BlockUtils;
 import com.org.pleoxmods.holidayseasons.items.ItemUtils;
+import com.org.pleoxmods.holidayseasons.seasons.SeasonHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -20,14 +18,17 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import com.tterrag.registrate.Registrate;
 
-@Mod(HolidaySeasons.MODID)
+@Mod(HolidaySeasons.MOD_ID)
 public class HolidaySeasons {
 
-    public static final String MODID = "holidayseasons";
+    public static final String MOD_ID = "holidayseasons";
     public static final Logger LOGGER = LogManager.getLogger();
 
     private static final String PROTOCOL_VERSION = "1";
+
+    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
 
     public HolidaySeasons(){
         // registering set up method
@@ -44,9 +45,20 @@ public class HolidaySeasons {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
+    private void loadSeasonalBlocks(){
+        SeasonHelper seasonHelper = new SeasonHelper();
+        // TODO: add lambda to each block for better custom registration
+        seasonHelper.getSeasonalBlocks().stream().forEach(
+                sb ->  REGISTRATE.object(sb.getName().toString())
+                .block(sb::new)
+                .register();
+        );
+    }
+
     private void setup(final FMLCommonSetupEvent event){
         LOGGER.info("PREINIT STUFF");
         LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+//        seasonHelper.loadSeasons(REGISTRATE);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event){
@@ -62,6 +74,7 @@ public class HolidaySeasons {
 
     private void processIMC(final InterModProcessEvent event){
     }
+
 
     // subscribe event to let event bus discover our methods
     @SubscribeEvent

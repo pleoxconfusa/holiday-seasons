@@ -1,8 +1,18 @@
 package com.org.pleoxmods.holidayseasons.seasons;
 
+import net.minecraft.block.Block;
+import org.apache.logging.log4j.LogManager;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 public class SeasonHelper {
     public enum Seasons {
@@ -18,6 +28,37 @@ public class SeasonHelper {
         EARLY_FALL,
         MID_FALL,
         LATE_FALL,
+    }
+
+    public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
+
+    public List<Block> getSeasonalBlocks(){
+            Seasons season = this.getSeason();
+            InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(season.toString());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            List<Class> blockClasses =  reader.lines()
+                    .filter(line -> line.endsWith("Block.class"))
+                    .map(line -> getClass(line, season.name()))
+                    .collect(Collectors.toList());
+            List<Block> seasonalBlocks = new ArrayList<>();
+            for(Class clazz: blockClasses){
+                try {
+                    seasonalBlocks.add((Block)clazz.newInstance());
+                } catch (Exception e) {
+                    LOGGER.error("Error loading block class {}: {}", clazz.getName(), e.getMessage());
+                }
+            }
+            return seasonalBlocks;
+    }
+
+    private Class getClass(String className, String packageName) {
+        try {
+            return Class.forName(packageName + "."
+                    + className.substring(0, className.lastIndexOf('.')));
+        } catch (ClassNotFoundException e) {
+            LOGGER.error("Error getting class name: {} in package: {} : {}", className, packageName, e.getMessage());
+            return null;
+        }
     }
 
     public Seasons getSeason(){
