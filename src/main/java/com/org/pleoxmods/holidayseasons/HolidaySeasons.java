@@ -18,7 +18,7 @@ import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import com.tterrag.registrate.Registrate;
+//import com.tterrag.registrate.Registrate;
 
 @Mod(HolidaySeasons.MOD_ID)
 public class HolidaySeasons {
@@ -28,7 +28,7 @@ public class HolidaySeasons {
 
     private static final String PROTOCOL_VERSION = "1";
 
-    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
+//    public static final Registrate REGISTRATE = Registrate.create(MOD_ID);
 
     public HolidaySeasons(){
         // registering set up method
@@ -46,13 +46,9 @@ public class HolidaySeasons {
     }
 
     private void loadSeasonalBlocks(){
+        // this is it. this is the whole mod
         SeasonHelper seasonHelper = new SeasonHelper();
-        // TODO: add lambda to each block for better custom registration
-        seasonHelper.getSeasonalBlocks().stream().forEach(
-                sb ->  REGISTRATE.object(sb.getName().toString())
-                .block(sb::new)
-                .register();
-        );
+        seasonHelper.getSeasonalBlocks().stream().forEach(sb -> sb.registerBlock());
     }
 
     private void setup(final FMLCommonSetupEvent event){

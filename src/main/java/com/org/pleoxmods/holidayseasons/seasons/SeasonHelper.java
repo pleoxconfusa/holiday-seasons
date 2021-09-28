@@ -1,5 +1,6 @@
 package com.org.pleoxmods.holidayseasons.seasons;
 
+import com.org.pleoxmods.holidayseasons.block.SeasonalBlock;
 import net.minecraft.block.Block;
 import org.apache.logging.log4j.LogManager;
 
@@ -32,18 +33,20 @@ public class SeasonHelper {
 
     public static final org.apache.logging.log4j.Logger LOGGER = LogManager.getLogger();
 
-    public List<Block> getSeasonalBlocks(){
+    public List<SeasonalBlock> getSeasonalBlocks() throws Exception{
             Seasons season = this.getSeason();
+            if(season == null)
+                throw new Exception("getSeason() returned null");
             InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(season.toString());
             BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
             List<Class> blockClasses =  reader.lines()
                     .filter(line -> line.endsWith("Block.class"))
                     .map(line -> getClass(line, season.name()))
                     .collect(Collectors.toList());
-            List<Block> seasonalBlocks = new ArrayList<>();
+            List<SeasonalBlock> seasonalBlocks = new ArrayList<>();
             for(Class clazz: blockClasses){
                 try {
-                    seasonalBlocks.add((Block)clazz.newInstance());
+                    seasonalBlocks.add((SeasonalBlock)clazz.newInstance());
                 } catch (Exception e) {
                     LOGGER.error("Error loading block class {}: {}", clazz.getName(), e.getMessage());
                 }
